@@ -58,20 +58,10 @@
           $Shortcut.Save()
           echo 207-Create-Shortcuts-NOTWORKING >> C:\\buildActions\\buildActionsOutput.txt
           echo 206-Testing-Begin >> C:\\buildActions\\buildActionsOutput.txt
-          $shortDomain = \"ACTEST\"
-          echo $shortDomain >> C:\\buildActions\\buildActionsOutput.txt
-          $remoteProfGroup = \"avd FSLogix Profile Users\"
-          echo $remoteProfGroup >> C:\\buildActions\\buildActionsOutput.txt
-          $remoteOdfcGroup = \"avd FSLogix ODFC Users\"
-          echo $remoteOdfcGroup >> C:\\buildActions\\buildActionsOutput.txt
-          $domainProfGroup = $shortDomain\\$remoteProfGroup
-          echo $domainProfGroup >> C:\\buildActions\\buildActionsOutput.txt
-          $domainOdfcGroup = $shortDomain\\$remoteOdfcGroup
-          echo $domainOdfcGroup >> C:\\buildActions\\buildActionsOutput.txt
           Remove-LocalGroupMember -Group 'FSLogix Profile Include List' -Member 'Everyone'
-          Add-LocalGroupMember -Group 'FSLogix Profile Include List' -Member $domainProfGroup
+          Add-LocalGroupMember -Group 'FSLogix Profile Include List' -Member 'ACTEST\avd FSLogix Profile Users'
           Remove-LocalGroupMember -Group 'FSLogix ODFC Include List' -Member 'Everyone'
-          Add-LocalGroupMember -Group 'FSLogix ODFC Include List' -Member $domainOdfcGroup
+          Add-LocalGroupMember -Group 'FSLogix ODFC Include List' -Member 'ACTEST\avd FSLogix ODFC Users'
           echo 006-FSLogix-Groups-Configured >> C:\\buildActions\\buildActionsOutput.txt
         ",
         "timeout": "PT1H",
