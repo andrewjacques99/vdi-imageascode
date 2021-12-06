@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseTemplateUri": {
+      "value": "https://statlasautomation001.blob.core.windows.net/arm/atlas_cloud_test"
+    },
+    "sasToken": {
+      "value": "?sv=2020-02-10&ss=b&srt=sco&sp=rwdlacx&se=2022-04-20T03:45:57Z&st=2021-04-19T19:45:57Z&spr=https&sig=IrCWDZe%2FkmfyFFdoYi%2F5atrhweMVDinYsBrZViO7Fgo%3D"
+    },
+    "templateFolder": {
+      "value": "linkedtemplates"
+    },
+    "subscriptionId": {
+      "value": "03ecf725-ba80-45fb-8b9b-76cd1deebddd"
+    },
+    "solution": {
+      "value": "avd"
+    },
+    "customer": {
+      "value": "Atlas Cloud Test"
+    },
+    "customerAbb": {
+      "value": "actest"
+    },
+    "shortDomain": {
+      "value": "ACTEST"
+    },
+    "templateImage": {
+      "value": "03_01_iaas_image.json"
+    }
+  }
+}
