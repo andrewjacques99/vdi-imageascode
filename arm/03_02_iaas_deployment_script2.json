@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "subscriptionId": {
+      "type": "string",
+      "metadata": {
+        "description": "subscriptionID."
+      }
+    },
+    "solution": {
+      "type": "string",
+      "metadata": {
+        "description": "DEFINED IN POWERSHELL - Solution."
+      }
+    },
+    "customerAbb": {
+      "type": "string",
+      "metadata": {
+        "description": "Customer abbrieviation, used for naming resources with Azure."
+      }
+    },
+    "shortDomain": {
+      "type": "string",
+      "metadata": {
+        "description": "Local domain name in NetBIOS format."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "runPowerShellInline",
+      "location": "[resourceGroup().location]",
+      "kind": "AzurePowerShell",
+      "properties": {
+        "azPowerShellVersion": "6.4",
+        "scriptContent": "
+          $WshShell = New-Object -comObject WScript.Shell
+          $Shortcut = $WshShell.CreateShortcut('C:\\Users\\cmdadmin\\Desktop\\compmgmt.lnk')
+          $Shortcut.TargetPath = 'C:\\Windows\\System32\\compmgmt.msc'
+          $Shortcut.Save()
+          $Shortcut = $WshShell.CreateShortcut('C:\\Users\\cmdadmin\\Desktop\\cmd.lnk')
+          $Shortcut.TargetPath = 'C:\\Windows\\System32\\cmd.exe'
+          $Shortcut.Save()
+          $Shortcut = $WshShell.CreateShortcut('C:\\Users\\cmdadmin\\Desktop\\explorer.lnk')
+          $Shortcut.TargetPath = 'C:\\Windows\\explorer.exe'
+          $Shortcut.Save()
+          $Shortcut = $WshShell.CreateShortcut('C:\\Users\\cmdadmin\\Desktop\\mstsc.lnk')
+          $Shortcut.TargetPath = 'C:\\Windows\\System32\\mstsc.exe'
+          $Shortcut.Save()
+          $Shortcut = $WshShell.CreateShortcut('C:\\Users\\cmdadmin\\Desktop\\regedit.lnk')
+          $Shortcut.TargetPath = 'C:\\Windows\\regedit.exe'
+          $Shortcut.Save()
+          $Shortcut = $WshShell.CreateShortcut('C:\\Users\\cmdadmin\\Desktop\\services.lnk')
+          $Shortcut.TargetPath = 'C:\\Windows\\System32\\services.msc'
+          $Shortcut.Save()
+          echo 207-Create-Shortcuts-NOTWORKING >> C:\\buildActions\\buildActionsOutput.txt
+          echo 206-Testing-Begin >> C:\\buildActions\\buildActionsOutput.txt
+          Remove-LocalGroupMember -Group 'FSLogix Profile Include List' -Member 'Everyone'
+          Add-LocalGroupMember -Group 'FSLogix Profile Include List' -Member 'ACTEST\\avd FSLogix Profile Users'
+          Remove-LocalGroupMember -Group 'FSLogix ODFC Include List' -Member 'Everyone'
+          Add-LocalGroupMember -Group 'FSLogix ODFC Include List' -Member 'ACTEST\\avd FSLogix ODFC Users'
+          echo 006-FSLogix-Groups-Configured >> C:\\buildActions\\buildActionsOutput.txt
+        ",
+        "timeout": "PT1H",
+        "cleanupPreference": "OnSuccess",
+        "retentionInterval": "P1D"
+      }
+    }
+  ],
+  "outputs": {}
+}
