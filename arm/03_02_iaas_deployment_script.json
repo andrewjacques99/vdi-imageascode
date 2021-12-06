@@ -58,11 +58,11 @@
           $Shortcut.Save()
           echo 207-Create-Shortcuts-NOTWORKING >> C:\\buildActions\\buildActionsOutput.txt
           echo 206-Testing-Begin >> C:\\buildActions\\buildActionsOutput.txt
-          [concat('$shortDomain = \"', parameters('shortDomain'), '\"')]
+          $shortDomain = \"ACTEST\"
           echo $shortDomain >> C:\\buildActions\\buildActionsOutput.txt
-          [concat('$remoteProfGroup = \"', parameters('solution'), ' FSLogix Profile Users\"')]
+          $remoteProfGroup = \"avd FSLogix Profile Users\"
           echo $remoteProfGroup >> C:\\buildActions\\buildActionsOutput.txt
-          [concat('$remoteOdfcGroup = \"', parameters('solution'), ' FSLogix ODFC Users\"')]
+          $remoteOdfcGroup = \"avd FSLogix ODFC Users\"
           echo $remoteOdfcGroup >> C:\\buildActions\\buildActionsOutput.txt
           $domainProfGroup = $shortDomain\\$remoteProfGroup
           echo $domainProfGroup >> C:\\buildActions\\buildActionsOutput.txt
