@@ -4,9 +4,12 @@ if (-not(Test-Path $BuildDir)) {
     New-Item  -ItemType Directory $BuildDir
 }
 $allVersions = Find-EvergreenApp -Name MicrosoftTeams | Get-EvergreenApp
-$mostRecent = $allVersions | Sort-Object -Descending -Property 'Version' | Select-Object -First 1 | Select-Object -ExpandProperty 'Version'
-$allOnVersion = $allVersions | Where-Object { $_.version -eq $mostRecent }
-$myVersion = $allOnVersion | Where-Object { $_.Architecture -eq 'x64'}
+$selectRing = $allVersions | Where-Object { $_.Ring -eq 'General' }
+$mostRecent = $selectRing | Sort-Object -Descending -Property 'Version' | Select-Object -First 1 | Select-Object -ExpandProperty 'Version'
+$allOneVersion = $allVersions | Where-Object { $_.version -eq $mostRecent }
+$selectArchitecture = $allOneVersion | Where-Object { $_.Architecture -eq 'x64'}
+$selectRing = $selectArchitecture | Where-Object { $_.Ring -eq 'General'}
+$myVersion = $selectRing | Where-Object { $_.Type -eq 'msi'}
 $fileName = split-path $myVersion.uri -Leaf
 $outFile = join-path 'c:\CustomizerArtifacts' $fileName
 if (-not(Test-Path $outFile)) {
